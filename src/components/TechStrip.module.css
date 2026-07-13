@@ -35,15 +35,19 @@
   gap: 10px;
   width: max-content;
   padding: 0 24px;
+  /* animation on by default — works on all platforms including mobile */
+  animation: marquee 32s linear infinite;
 }
 
-@media (prefers-reduced-motion: no-preference) {
+/* only stop it for users who explicitly asked for reduced motion */
+@media (prefers-reduced-motion: reduce) {
   .track {
-    animation: marquee 32s linear infinite;
+    animation: none;
   }
 }
 
-.outer:hover .track {
+.outer:hover .track,
+.outer:focus-within .track {
   animation-play-state: paused;
 }
 

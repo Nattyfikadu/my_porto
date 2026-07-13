@@ -55,28 +55,35 @@
   flex-shrink: 0;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .dot {
-    animation: pulseDot 2s ease-in-out infinite;
-  }
-  @keyframes pulseDot {
-    0%, 100% { opacity: 1; box-shadow: 0 0 8px var(--accent); }
-    50%       { opacity: 0.4; box-shadow: 0 0 3px var(--accent); }
-  }
+/* always on — mobile gets these too */
+.dot        { animation: pulseDot 2s ease-in-out infinite; }
+.glow       { animation: glowPulse 2s ease-in-out infinite; }
+.avatarWrap { animation: fadeScale 0.45s var(--ease-out) both; }
+.name       { animation: slideUp 0.45s var(--ease-out) 0.15s both; }
+.role       { animation: slideUp 0.45s var(--ease-out) 0.25s both; }
+.roles      { animation: slideUp 0.45s var(--ease-out) 0.25s both; }
+.stats      { animation: slideUp 0.45s var(--ease-out) 0.40s both; }
 
-  .avatarWrap { animation: fadeScale 0.45s var(--ease-out) both; }
-  .name       { animation: slideUp 0.45s var(--ease-out) 0.15s both; }
-  .role       { animation: slideUp 0.45s var(--ease-out) 0.25s both; }
-  .stats      { animation: slideUp 0.45s var(--ease-out) 0.40s both; }
+/* only stop for users who explicitly prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .dot, .glow, .avatarWrap, .name, .role, .roles, .stats { animation: none; }
+}
 
-  @keyframes fadeScale {
-    from { opacity: 0; transform: scale(0.88); }
-    to   { opacity: 1; transform: scale(1); }
-  }
-  @keyframes slideUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; box-shadow: 0 0 8px var(--accent); }
+  50%       { opacity: 0.4; box-shadow: 0 0 3px var(--accent); }
+}
+@keyframes glowPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.4; transform: scale(0.92); }
+}
+@keyframes fadeScale {
+  from { opacity: 0; transform: scale(0.88); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 .avatar {
