@@ -1,0 +1,81 @@
+.section {
+  padding: var(--section-gap) 0;
+  text-align: left;
+}
+
+.card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 36px 40px;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+/* roaming glow that follows the mouse via CSS custom properties */
+.card::before {
+  content: '';
+  position: absolute;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(200,255,77,0.10) 0%, transparent 70%);
+  transform: translate(var(--mx, -50%), var(--my, -50%));
+  pointer-events: none;
+  transition: transform 0.15s ease-out, opacity 0.3s;
+  opacity: 0;
+  z-index: 0;
+}
+
+.card:hover::before {
+  opacity: 1;
+}
+
+.card:hover {
+  border-color: rgba(200,255,77,0.2);
+  box-shadow: var(--shadow-md);
+}
+
+/* keep content above the glow layer */
+.card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.bio {
+  color: var(--muted);
+  line-height: 1.85;
+  font-size: 14px;
+  max-width: 60ch;
+}
+
+.bio strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.skillTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.skillTag {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted);
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 4px 11px;
+  letter-spacing: 0.02em;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.skillTag:hover {
+  color: var(--accent);
+  border-color: rgba(200,255,77,0.35);
+}

@@ -1,0 +1,182 @@
+.card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.38s var(--spring), box-shadow 0.38s;
+  cursor: default;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.coverLink {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+/* ── COVER ── */
+.cover {
+  position: relative;
+  height: 220px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #161620 0%, #0e0e18 100%);
+}
+
+.coverImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(15%) brightness(0.82);
+  transition: transform 0.5s var(--ease-out), filter 0.4s;
+}
+
+.card:hover .coverImg {
+  transform: scale(1.04);
+  filter: grayscale(0%) brightness(0.9);
+}
+
+.card:hover .visitHint {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(transparent 35%, rgba(0, 0, 0, 0.8) 100%);
+}
+
+.accentBar {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--accent);
+}
+
+.coverContent {
+  position: absolute;
+  bottom: 14px; left: 18px; right: 18px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.coverTitle {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.tags {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.visitHint {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #0a0a0b;
+  font-size: 11px;
+  font-weight: 700;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 0.25s, transform 0.25s var(--ease-out);
+  z-index: 2;
+}
+
+.visitHint svg {
+  width: 12px;
+  height: 12px;
+}
+
+.tag {
+  font-size: 10px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.88);
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  padding: 3px 9px;
+}
+
+/* ── BODY ── */
+.body {
+  padding: 20px 22px 22px;
+}
+
+.desc {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.7;
+  margin-bottom: 16px;
+  max-width: 58ch;
+}
+
+.ctas {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  border: 1px solid var(--border);
+  background: var(--panel-2);
+  color: var(--text);
+  box-shadow: var(--shadow-sm);
+  transition: background 0.2s, border-color 0.2s, transform 0.28s var(--spring), box-shadow 0.2s;
+}
+
+.pill:hover {
+  background: var(--border);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.pill svg {
+  width: 12px;
+  height: 12px;
+  transition: transform 0.2s;
+}
+
+.pill:hover svg {
+  transform: translateX(2px);
+}
+
+.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #0a0a0b;
+}
+
+.primary:hover {
+  background: #d4ff6a;
+  border-color: #d4ff6a;
+}

@@ -1,0 +1,41 @@
+.label {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 8px 16px 8px 10px;
+  margin-bottom: 28px;
+}
+
+.iconWrap {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s, border-color 0.3s;
+}
+
+.iconWrap svg {
+  width: 14px;
+  height: 14px;
+  color: var(--muted);
+  transition: color 0.35s;
+}
+
+/* when parent section is revealed, accent the icon */
+:global(.visible) .iconWrap svg {
+  color: var(--accent);
+}
+
+.label span {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: 0.01em;
+}

@@ -1,0 +1,9 @@
+.section {
+  padding-bottom: var(--section-gap);
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}

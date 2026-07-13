@@ -1,0 +1,76 @@
+/* full bleed — sits outside .wrap, so just 100% width */
+.outer {
+  background: rgba(200, 255, 77, 0.08);
+  border-top: 1px solid rgba(200, 255, 77, 0.12);
+  border-bottom: 1px solid rgba(200, 255, 77, 0.12);
+  padding: 16px 0;
+  margin: 0;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.outer::before,
+.outer::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 80px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.outer::before {
+  left: 0;
+  background: linear-gradient(to right, var(--bg), transparent);
+}
+
+.outer::after {
+  right: 0;
+  background: linear-gradient(to left, var(--bg), transparent);
+}
+
+.track {
+  display: flex;
+  gap: 10px;
+  width: max-content;
+  padding: 0 24px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .track {
+    animation: marquee 32s linear infinite;
+  }
+}
+
+.outer:hover .track {
+  animation-play-state: paused;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.chip {
+  border-radius: 999px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 600;
+  flex-shrink: 0;
+  cursor: default;
+  color: var(--muted);
+  padding: 7px 14px;
+  white-space: nowrap;
+  transition: color 0.2s, border-color 0.2s, transform 0.28s var(--spring);
+}
+
+.chip:hover {
+  color: var(--text);
+  border-color: rgba(200, 255, 77, 0.35);
+  transform: translateY(-2px);
+}
