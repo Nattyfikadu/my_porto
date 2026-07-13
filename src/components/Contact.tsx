@@ -5,7 +5,7 @@ import SectionLabel from './SectionLabel'
 import styles from './Contact.module.css'
 
 // Replace with your Formspree endpoint once you create the form at formspree.io
-const FORMSPREE_URL = 'https://formspree.io/f/REPLACE_ME'
+const FORMSPREE_URL = 'https://formspree.io/f/xzdnborg'
 
 interface FormState {
   name: string
