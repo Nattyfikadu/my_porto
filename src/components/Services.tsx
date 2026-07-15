@@ -1,4 +1,4 @@
-import { useReveal } from '../hooks/useReveal'
+import { useRef, useEffect } from 'react'
 import SectionLabel from './SectionLabel'
 import styles from './Services.module.css'
 import type { ReactNode } from 'react'
@@ -76,9 +76,36 @@ const services: Service[] = [
 ]
 
 export default function Services() {
-  const ref = useReveal<HTMLElement>()
+  const sectionRef = useRef<HTMLElement>(null)
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([])
+
+  useEffect(() => {
+    const cards = cardRefs.current.filter(Boolean) as HTMLDivElement[]
+    if (!cards.length) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const card = entry.target as HTMLDivElement
+            const idx = parseInt(card.dataset.idx ?? '0', 10)
+            // stagger delay: 180ms per card
+            setTimeout(() => {
+              card.classList.add(styles.visible)
+            }, idx * 180)
+            observer.unobserve(card)
+          }
+        })
+      },
+      { threshold: 0.15 }
+    )
+
+    cards.forEach((card) => observer.observe(card))
+    return () => observer.disconnect()
+  }, [])
+
   return (
-    <section ref={ref} className={`reveal ${styles.section}`}>
+    <section ref={sectionRef} className={styles.section}>
       <SectionLabel
         label="Services"
         icon={
@@ -90,7 +117,13 @@ export default function Services() {
       />
       <div className={styles.grid}>
         {services.map((svc, i) => (
-          <div key={i} className={styles.card}>
+          <div
+            key={i}
+            ref={(el) => { cardRefs.current[i] = el }}
+            data-idx={i}
+            className={`${styles.card} ${i % 2 === 0 ? styles.fromLeft : styles.fromRight}`}
+          >
+            <div className={styles.entryGlow} />
             <div className={styles.iconWrap}>{svc.icon}</div>
             <div className={styles.title}>{svc.title}</div>
             <div className={styles.desc}>{svc.desc}</div>

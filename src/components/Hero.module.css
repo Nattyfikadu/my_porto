@@ -1,174 +1,112 @@
+/* ── TWO-COLUMN: text LEFT, photo RIGHT ── */
 .hero {
-  padding: 80px 0 56px;
-  text-align: center;
-}
-
-.avatarWrap {
-  position: relative;
-  display: inline-block;
-  margin-bottom: 24px;
-}
-
-.glow {
-  position: absolute;
-  inset: -40px;
-  background: radial-gradient(circle, rgba(200,255,77,0.26) 0%, rgba(200,255,77,0.08) 55%, transparent 75%);
-  border-radius: 50%;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .glow {
-    animation: glowPulse 2s ease-in-out infinite;
-  }
-  @keyframes glowPulse {
-    0%, 100% { opacity: 1;   transform: scale(1); }
-    50%       { opacity: 0.4; transform: scale(0.92); }
-  }
-}
-
-.statusChip {
-  position: absolute;
-  top: -10px;
-  right: -16px;
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto;
   align-items: center;
-  gap: 6px;
-  background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  padding: 4px 10px 4px 8px;
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--text);
-  white-space: nowrap;
-  z-index: 2;
-  box-shadow: var(--shadow-sm);
+  gap: 40px;
+  padding: 80px 0 64px;
+  min-height: 82vh;
+  /* bleed right to viewport edge */
+  margin-right: calc(-50vw + 50%);
+  padding-right: 0;
+  /* pull left to reduce dead space */
+  margin-left: calc(-50vw + 50%);
+  padding-left: clamp(24px, 5vw, 80px);
 }
 
-.dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 8px var(--accent);
-  flex-shrink: 0;
+/* ── LEFT: content ── */
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-left: clamp(24px, 6vw, 80px);
 }
 
-/* always on — mobile gets these too */
-.dot        { animation: pulseDot 2s ease-in-out infinite; }
-.glow       { animation: glowPulse 2s ease-in-out infinite; }
-.avatarWrap { animation: fadeScale 0.45s var(--ease-out) both; }
-.name       { animation: slideUp 0.45s var(--ease-out) 0.15s both; }
-.role       { animation: slideUp 0.45s var(--ease-out) 0.25s both; }
-.roles      { animation: slideUp 0.45s var(--ease-out) 0.25s both; }
-.stats      { animation: slideUp 0.45s var(--ease-out) 0.40s both; }
-
-/* only stop for users who explicitly prefer reduced motion */
-@media (prefers-reduced-motion: reduce) {
-  .dot, .glow, .avatarWrap, .name, .role, .roles, .stats { animation: none; }
-}
-
-@keyframes pulseDot {
-  0%, 100% { opacity: 1; box-shadow: 0 0 8px var(--accent); }
-  50%       { opacity: 0.4; box-shadow: 0 0 3px var(--accent); }
-}
-@keyframes glowPulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50%       { opacity: 0.4; transform: scale(0.92); }
-}
-@keyframes fadeScale {
-  from { opacity: 0; transform: scale(0.88); }
-  to   { opacity: 1; transform: scale(1); }
-}
-@keyframes slideUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-.avatar {
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  object-fit: cover;
-  object-position: top center;
-  border: 3px solid var(--border);
-  filter: grayscale(100%) contrast(1.15) brightness(0.92);
-  display: block;
-  box-shadow: var(--shadow-md);
-}
-
+/* huge display name like the reference */
 .name {
-  font-size: clamp(36px, 10vw, 54px);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: clamp(48px, 8vw, 80px);
   font-weight: 800;
-  letter-spacing: -0.03em;
-  background: linear-gradient(135deg, var(--text) 40%, #6b6b72 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  line-height: 1.05;
-  margin-bottom: 8px;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+  color: var(--text);
+  margin-bottom: 12px;
+  animation: slideLeft 0.6s var(--ease-out) 0.05s both;
 }
 
+/* italic accent line — "the Developer, with passion" style */
 .title {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: clamp(18px, 4vw, 24px);
-  font-weight: 700;
-  letter-spacing: -0.02em;
+  font-size: clamp(14px, 2.2vw, 18px);
+  font-weight: 400;
+  font-style: italic;
+  color: var(--muted);
+  margin-bottom: 18px;
+  animation: slideLeft 0.6s var(--ease-out) 0.15s both;
+}
+
+.title em {
+  font-style: italic;
   color: var(--accent);
-  margin-bottom: 12px;
+  font-weight: 600;
 }
 
 .tagline {
   font-size: 15px;
   color: var(--muted);
-  line-height: 1.65;
-  max-width: 46ch;
-  margin: 0 auto 20px;
+  line-height: 1.75;
+  max-width: 44ch;
+  margin-bottom: 28px;
+  animation: slideLeft 0.6s var(--ease-out) 0.22s both;
 }
 
 .roles {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  gap: 8px;
-  margin-bottom: 24px;
-  max-width: 520px;
-  margin-left: auto;
-  margin-right: auto;
+  gap: 7px;
+  margin-bottom: 28px;
+  animation: slideLeft 0.6s var(--ease-out) 0.28s both;
 }
 
 .roleChip {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 700;
   color: var(--muted);
   background: var(--panel);
   border: 1px solid var(--border);
   border-radius: 999px;
-  padding: 5px 13px;
+  padding: 4px 12px;
   letter-spacing: 0.01em;
-  transition: color 0.2s, border-color 0.2s;
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
 }
 
 .roleChip:hover {
   color: var(--text);
-  border-color: rgba(200,255,77,0.3);
+  border-color: rgba(200,255,77,0.4);
+  background: var(--panel-2);
+}
+
+[data-theme='light'] .roleChip:hover {
+  color: var(--text);
+  border-color: rgba(80,160,0,0.4);
+  background: var(--panel-2);
 }
 
 .ctas {
   display: flex;
-  justify-content: center;
-  gap: 10px;
+  gap: 12px;
   flex-wrap: wrap;
-  margin-bottom: 32px;
+  margin-bottom: 36px;
+  animation: slideLeft 0.6s var(--ease-out) 0.34s both;
 }
 
 .btn {
   display: inline-flex;
   align-items: center;
+  gap: 8px;
   justify-content: center;
-  padding: 11px 22px;
+  padding: 12px 24px;
   border-radius: 999px;
   font-size: 13px;
   font-weight: 600;
@@ -187,36 +125,68 @@
 }
 
 .btnPrimary {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: #0a0a0b;
+  background: var(--text);
+  border-color: var(--text);
+  color: var(--bg);
 }
 
 .btnPrimary:hover {
-  background: #d4ff6a;
-  border-color: #d4ff6a;
+  opacity: 0.85;
+}
+
+/* CV download — accent outlined */
+.btnCv {
+  border-color: rgba(200, 255, 77, 0.5);
+  color: var(--accent);
+  gap: 7px;
+}
+
+.btnCv svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  transition: transform 0.3s var(--spring);
+}
+
+.btnCv:hover {
+  border-color: var(--accent);
+  background: rgba(200, 255, 77, 0.08);
+}
+
+.btnCv:hover svg {
+  transform: translateY(2px);
+}
+
+[data-theme='light'] .btnCv {
+  border-color: rgba(60, 160, 40, 0.5);
+  color: #3a9a28;
+}
+
+[data-theme='light'] .btnCv:hover {
+  border-color: #3a9a28;
+  background: rgba(60, 160, 40, 0.07);
 }
 
 .stats {
   display: flex;
-  justify-content: center;
+  animation: slideLeft 0.6s var(--ease-out) 0.4s both;
 }
 
 .stat {
-  padding: 18px 36px;
+  padding: 14px 28px;
   border: 1px solid var(--border);
   background: var(--panel);
   box-shadow: var(--shadow-sm);
 }
 
-.stat:first-child { border-radius: 16px 0 0 16px; }
-.stat:last-child  { border-radius: 0 16px 16px 0; border-left: none; }
+.stat:first-child { border-radius: 14px 0 0 14px; }
+.stat:last-child  { border-radius: 0 14px 14px 0; border-left: none; }
 
 .statNum {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 30px;
+  font-size: 26px;
   font-weight: 800;
-  color: var(--text);
+  color: var(--accent);
   letter-spacing: -0.03em;
 }
 
@@ -225,4 +195,130 @@
   color: var(--muted);
   font-weight: 500;
   margin-top: 2px;
+}
+
+/* ── RIGHT: avatar — flush to viewport edge ── */
+.avatarCol {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: clamp(40px, 8vw, 120px);
+  align-self: stretch;
+}
+
+.avatarWrap {
+  position: relative;
+  display: inline-block;
+}
+
+.glow {
+  position: absolute;
+  inset: -40px;
+  background: radial-gradient(circle, rgba(200,255,77,0.20) 0%, rgba(200,255,77,0.05) 55%, transparent 75%);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: glowPulse 2.5s ease-in-out infinite;
+}
+
+.statusChip {
+  position: absolute;
+  bottom: 14px;
+  left: -24px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 5px 12px 5px 9px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+  z-index: 2;
+  box-shadow: var(--shadow-sm);
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+  flex-shrink: 0;
+  animation: pulseDot 2.5s ease-in-out infinite;
+}
+
+.avatar {
+  width: clamp(260px, 38vw, 420px);
+  height: clamp(260px, 38vw, 420px);
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: top center;
+  border: 4px solid var(--border);
+  filter: grayscale(100%) contrast(1.12) brightness(0.94);
+  display: block;
+  box-shadow: var(--shadow-lg);
+  animation: fadeIn 0.8s var(--ease-out) 0.1s both;
+  transition: filter 0.4s, transform 0.4s var(--spring);
+}
+
+.avatarWrap:hover .avatar {
+  filter: grayscale(40%) contrast(1.08) brightness(0.98);
+  transform: scale(1.02);
+}
+
+/* ── KEYFRAMES ── */
+@keyframes slideLeft {
+  from { opacity: 0; transform: translateX(-32px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.92); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; box-shadow: 0 0 8px var(--accent); }
+  50%       { opacity: 0.35; box-shadow: 0 0 3px var(--accent); }
+}
+@keyframes glowPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.35; transform: scale(0.93); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .name, .title, .tagline, .roles, .ctas, .stats, .avatar, .dot, .glow {
+    animation: none;
+  }
+}
+
+/* ── MOBILE: stack, photo on top ── */
+@media (max-width: 640px) {
+  .hero {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    text-align: center;
+    padding: 48px 24px 40px;
+    gap: 28px;
+    min-height: unset;
+    margin-right: 0;
+    margin-left: 0;
+  }
+
+  .avatarCol { order: -1; justify-content: center; }
+  .content   { align-items: center; }
+  .tagline   { margin-left: auto; margin-right: auto; }
+
+  .avatar {
+    width: clamp(150px, 50vw, 200px);
+    height: clamp(150px, 50vw, 200px);
+  }
+
+  .statusChip {
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -18px;
+  }
+
+  .name { font-size: clamp(40px, 12vw, 60px); }
 }

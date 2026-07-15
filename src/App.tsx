@@ -1,4 +1,6 @@
 import './App.css'
+import { useTheme } from './hooks/useTheme'
+import CursorGlow from './components/CursorGlow'
 import Nav from './components/Nav'
 import Hero from './components/Hero'
 import TechStrip from './components/TechStrip'
@@ -10,9 +12,12 @@ import Contact from './components/Contact'
 import Footer from './components/Footer'
 
 export default function App() {
+  const { theme, toggle } = useTheme()
+
   return (
     <>
-      <Nav />
+      <CursorGlow />
+      <Nav theme={theme} onToggleTheme={toggle} />
       <main className="wrap">
         <Hero />
       </main>

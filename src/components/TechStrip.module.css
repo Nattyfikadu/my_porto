@@ -1,61 +1,78 @@
-/* full bleed — sits outside .wrap, so just 100% width */
+/* full bleed */
 .outer {
-  background: rgba(200, 255, 77, 0.08);
+  background: rgba(200, 255, 77, 0.06);
   border-top: 1px solid rgba(200, 255, 77, 0.12);
   border-bottom: 1px solid rgba(200, 255, 77, 0.12);
-  padding: 16px 0;
-  margin: 0;
+  padding: 10px 0;
   width: 100%;
   overflow: hidden;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
+/* edge fades */
 .outer::before,
 .outer::after {
   content: '';
   position: absolute;
   top: 0; bottom: 0;
-  width: 80px;
+  width: 120px;
   z-index: 2;
   pointer-events: none;
 }
-
 .outer::before {
   left: 0;
-  background: linear-gradient(to right, var(--bg), transparent);
+  background: linear-gradient(to right, var(--bg) 20%, transparent 100%);
 }
-
 .outer::after {
   right: 0;
-  background: linear-gradient(to left, var(--bg), transparent);
+  background: linear-gradient(to left, var(--bg) 20%, transparent 100%);
 }
 
-.track {
+/* shared track styles */
+.trackLtr,
+.trackRtl {
   display: flex;
   gap: 10px;
   width: max-content;
-  padding: 0 24px;
-  /* animation on by default — works on all platforms including mobile */
-  animation: marquee 32s linear infinite;
+  padding: 4px 24px;
 }
 
-/* only stop it for users who explicitly asked for reduced motion */
-@media (prefers-reduced-motion: reduce) {
-  .track {
-    animation: none;
-  }
+/* row 1 — left to right */
+.trackLtr {
+  animation: marquee-ltr 30s linear infinite;
 }
 
-.outer:hover .track,
-.outer:focus-within .track {
+/* row 2 — right to left, start offset by one set so left side is always full */
+.trackRtl {
+  animation: marquee-rtl 34s linear infinite;
+  transform: translateX(-16.666%);
+}
+
+/* pause on hover */
+.outer:hover .trackLtr,
+.outer:hover .trackRtl {
   animation-play-state: paused;
 }
 
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+@media (prefers-reduced-motion: reduce) {
+  .trackLtr, .trackRtl { animation: none; }
 }
 
+@keyframes marquee-ltr {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-16.666%); }
+}
+
+/* RTL starts pre-shifted left and moves back toward 0 then loops */
+@keyframes marquee-rtl {
+  from { transform: translateX(-16.666%); }
+  to   { transform: translateX(0); }
+}
+
+/* chips */
 .chip {
   border-radius: 999px;
   background: var(--panel);
@@ -68,13 +85,20 @@
   flex-shrink: 0;
   cursor: default;
   color: var(--muted);
-  padding: 7px 14px;
+  padding: 6px 13px;
   white-space: nowrap;
-  transition: color 0.2s, border-color 0.2s, transform 0.28s var(--spring);
+  transition: color 0.2s, border-color 0.2s, box-shadow 0.2s, transform 0.28s var(--spring);
 }
 
 .chip:hover {
   color: var(--text);
-  border-color: rgba(200, 255, 77, 0.35);
+  border-color: rgba(200, 255, 77, 0.4);
+  box-shadow: 0 0 10px rgba(200, 255, 77, 0.15);
   transform: translateY(-2px);
+}
+
+/* light mode */
+[data-theme='light'] .chip:hover {
+  border-color: rgba(40, 140, 60, 0.5);
+  box-shadow: 0 0 10px rgba(40, 140, 60, 0.12);
 }

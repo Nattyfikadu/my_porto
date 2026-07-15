@@ -83,3 +83,31 @@
   width: 16px;
   height: 16px;
 }
+
+/* ── THEME TOGGLE ── */
+.themeBtn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--muted);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.35s var(--spring), background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+
+.themeBtn:hover {
+  transform: translateY(-2px) rotate(20deg);
+  background: var(--panel-2);
+  color: var(--accent);
+  box-shadow: var(--shadow-md);
+}
+
+.themeBtn svg {
+  width: 16px;
+  height: 16px;
+}
